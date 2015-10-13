@@ -15,13 +15,13 @@ import java.io.*;
 public class OTPClient {
 
     @Option(name = "-p", usage = "port to connect to")
-    int portnumber = 9090;
+    private int portnumber = 9090;
     @Option(name = "-t", usage = "ip or hostname to connect to", required = true)
-    InetAddress serverIPAddress;
+    private InetAddress serverIPAddress;
     @Option(name = "-k", usage = "32bits/8hexpair (0-F) string to seed SecureRandom for a one-time-pad", required = true)
-    String hexStringSeed;
+    private String hexStringSeed;
     @Option(name = "-s", usage = "message to encrypt and send", required = true)
-    String message;
+    private String message;
 
     public static void main(String[] args) throws IOException, CmdLineException {
         new OTPClient().doMain(args);
@@ -53,10 +53,9 @@ public class OTPClient {
         System.out.println("Sending encrypted message.");
         Socket serverSocket = new Socket(serverIPAddress, portnumber);
         BufferedWriter out = new BufferedWriter( new OutputStreamWriter(serverSocket.getOutputStream()));
-        out.append(encryptedMessage);
+        DataOutputStream lengthout = new DataOutputStream(serverSocket.getOutputStream());
+        lengthout.writeInt(encryptedMessage.length());
+        out.write(encryptedMessage);
         out.close();
-
-        //System.out.println("Using key: " + ByteToHexString(keyHexSeed));
-        //System.out.println("Decoded message is: " + Arrays.toString(decoded));
     }
 }

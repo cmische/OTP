@@ -1,7 +1,6 @@
 import javax.xml.bind.DatatypeConverter;
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
-import java.util.Arrays;
 
 /**
  * Created by carli_000 on 10/11/2015.
@@ -46,10 +45,6 @@ public class OTPCrypt {
         //String accepts String charsetName as a parameter for converting bytes to chars
         String StringDecoded = new String(decoded, WINDOWS_CHARSET);
         return StringDecoded;
-    }
-
-    public static String ByteToHexString(byte[] array) {
-        return DatatypeConverter.printHexBinary(array);
     }
 
     public static byte[] HexStringToByteArray(String s) {

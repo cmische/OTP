@@ -2,6 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
 
+
 /**
  * Created by Carlin on 10/11/15.
  */
@@ -21,22 +22,34 @@ public class OTPServerThread extends Thread {
 
 
     public void run() {
-        String inputLine = "";
-
+        String inputLine = null;
+        System.out.println("New message!");
         try {
+            DataInputStream lengthin = new DataInputStream(socket.getInputStream());
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                try {
-                    inputLine = in.readLine();
-                    System.out.println("Encrypted message " + inputLine + " from " + clientAddress);
-                    System.out.println(OTPCrypt.decrypt(inputLine.getBytes(WINDOWS_CHARSET), OTPCrypt.HexStringToByteArray(hexStringseed)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            int length = 1;
+            try {
+                length = lengthin.readInt();
+                System.out.println("Encrypted message length is " + length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                char [] buf = new char[length];
+                in.read(buf, 0, length);
+                String encryptedmessage = new String(buf);
+                System.out.println("Encrypted message " + encryptedmessage + " from " + clientAddress);
+                System.out.println("Decrypted message follows");
+                System.out.println(OTPCrypt.decrypt(encryptedmessage.getBytes(), OTPCrypt.HexStringToByteArray(hexStringseed)));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             in.close();
         } catch (IOException e) {
             //report exception somewhere.
             e.printStackTrace();
         }
+        System.out.println("Done");
     }
 }
 

@@ -12,9 +12,9 @@ import java.net.Socket;
 public class OTPServer {
 
     @Option(name = "-p", usage = "port to connect to")
-    int portnumber = 9090;
+    private int portnumber = 9090;
     @Option(name = "-k", usage = "32bits/8hex/16char(0-F) string to seed SecureRandom for a one-time-pad", required = true)
-    String hexStringSeed;
+    private String hexStringSeed;
 
     public static void main(String[] args) throws IOException, CmdLineException {
         new OTPServer().doMain(args);

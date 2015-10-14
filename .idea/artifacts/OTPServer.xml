@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="OTPServer">
+    <output-path>$PROJECT_DIR$/out/artifacts/OTPServer</output-path>
+    <root id="archive" name="OTPServer.jar">
+      <element id="module-output" name="OTP" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/out/production/OTP/args4j-2.32.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
